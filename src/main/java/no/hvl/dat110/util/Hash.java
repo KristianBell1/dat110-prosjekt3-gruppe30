@@ -6,6 +6,8 @@ package no.hvl.dat110.util;
  *
  */
 
+import no.hvl.dat110.middleware.Message;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -52,13 +54,17 @@ catch (NoSuchAlgorithmException e) {
 		// Task: compute the address size of MD5
 		int numberOfBits = bitSize();
 
+
 		// compute the number of bits = bitSize()
+
+
 		
 		// compute the address size = 2 ^ number of bits
+		BigInteger addressSize =  BigInteger.valueOf(2).pow(numberOfBits);
 		
 		// return the address size
 		
-		return null;
+		return addressSize;
 	}
 	
 	public static int bitSize() {
@@ -66,6 +72,12 @@ catch (NoSuchAlgorithmException e) {
 		int digestlen = 0;
 		
 		// find the digest length
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			digestlen = md.getDigestLength();
+		} catch(NoSuchAlgorithmException e){
+			e.printStackTrace();
+		}
 		
 		return digestlen*8;
 	}
