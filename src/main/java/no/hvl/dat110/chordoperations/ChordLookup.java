@@ -23,7 +23,6 @@ import no.hvl.dat110.util.Util;
  *
  */
 public class ChordLookup {
-
 	private static final Logger logger = LogManager.getLogger(ChordLookup.class);
 	private Node node;
 	

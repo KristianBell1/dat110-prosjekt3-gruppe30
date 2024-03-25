@@ -52,7 +52,7 @@ catch (NoSuchAlgorithmException e) {
 	public static BigInteger addressSize() {
 		
 		// Task: compute the address size of MD5
-		int numberOfBits = bitSize();
+
 
 
 		// compute the number of bits = bitSize()
@@ -60,7 +60,7 @@ catch (NoSuchAlgorithmException e) {
 
 		
 		// compute the address size = 2 ^ number of bits
-		BigInteger addressSize =  BigInteger.valueOf(2).pow(numberOfBits);
+		BigInteger addressSize =  BigInteger.valueOf(2).pow(bitSize());
 		
 		// return the address size
 		
