@@ -42,9 +42,16 @@ public class ChordLookup {
 		// if logic returns false; call findHighestPredecessor(key)
 		
 		// do highest_pred.findSuccessor(key) - This is a recursive call until logic returns true
-				
-		return null;					
+		NodeInterface succnode = node.getSuccessor();
+		if(Util.checkInterval(key, node.getNodeID().add(BigInteger.ONE), succnode.getNodeID())) {
+			return succnode;
+		} else {
+			NodeInterface highest_pred = findHighestPredecessor(key);
+			return highest_pred.findSuccessor(key);
+		}
 	}
+
+
 	
 	/**
 	 * This method makes a remote call. Invoked from a local client
