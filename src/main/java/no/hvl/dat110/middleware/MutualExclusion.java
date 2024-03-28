@@ -90,10 +90,20 @@ public class MutualExclusion {
         logger.info("Number of peers to vote = " + activenodes.size());
 
         // iterate over the activenodes
+		for(Message activenode: activenodes) {
+            try {
+                // obtain a stub for each node from the registry
+                NodeInterface stub = (NodeInterface) Util.getProcessStub(activenode.getNodeName(), activenode.getPort());
+                // call onMutexRequestReceived()
+                stub.onMutexRequestReceived(message);
+            }catch (RemoteException e){
+                logger.error("RemoteException while multicasting message: " + e);
+            }
 
-        // obtain a stub for each node from the registry
+        }
 
-        // call onMutexRequestReceived()
+
+
 
     }
 
