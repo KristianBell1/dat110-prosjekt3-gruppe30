@@ -110,19 +110,30 @@ public class MutualExclusion {
     public void onMutexRequestReceived(Message message) throws RemoteException {
 
         // increment the local clock
-
+        clock.increment();
         // if message is from self, acknowledge, and call onMutexAcknowledgementReceived()
+        if(message.getNodeName().equals(node.getNodeName())){
+            queueack.add(message);
+            onMutexAcknowledgementReceived(message);
+            return;
+        }
 
-        int caseid = -1;
 
         /* write if statement to transition to the correct caseid in the doDecisionAlgorithm */
-
+        int caseid = 0;
         // caseid=0: Receiver is not accessing shared resource and does not want to (send OK to sender)
 
+        if(!WANTS_TO_ENTER_CS && !CS_BUSY){
+            caseid = 0;
+        }
         // caseid=1: Receiver already has access to the resource (dont reply but queue the request)
-
+        else if(CS_BUSY){
+            caseid = 1;
+        }
         // caseid=2: Receiver wants to access resource but is yet to - compare own message clock to received message's clock
-
+        else if (WANTS_TO_ENTER_CS) {
+            caseid = 2;
+        }
         // check for decision
         doDecisionAlgorithm(message, mutexqueue, caseid);
     }
